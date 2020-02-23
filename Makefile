@@ -1,4 +1,5 @@
-WORLDTREE := worldtree_corpus_textgraphs2019sharedtask_withgraphvis
+WORLDTREE := expl-tablestore-export-2020-02-17-123232-traindevetest
+TABLESTORE := expl-tablestore-export-2020-02-17-123232
 
 predict-tfidf%.zip: predict-tfidf%.txt
 	rm -f $@
@@ -8,16 +9,16 @@ predict-tfidf%.zip: predict-tfidf%.txt
 	rm -rf $(TMP)
 
 predict-tfidf-test.txt:
-	./baseline_tfidf.py $(WORLDTREE)/annotation/expl-tablestore-export-2017-08-25-230344/tables $(WORLDTREE)/questions/ARC-Elementary+EXPL-Test-Masked.tsv > $@
+	./baseline_tfidf.py $(TABLESTORE)/tables $(TABLESTORE)/questions.test.tsv > $@
 
 predict-tfidf.txt:
-	./baseline_tfidf.py $(WORLDTREE)/annotation/expl-tablestore-export-2017-08-25-230344/tables $(WORLDTREE)/questions/ARC-Elementary+EXPL-Dev.tsv > $@
+	./baseline_tfidf.py $(TABLESTORE)/tables $(TABLESTORE)/questions.dev.tsv > $@
 
-dataset: worldtree_corpus_textgraphs2019sharedtask_withgraphvis.zip
+dataset: $(WORLDTREE).zip
 	unzip -o $<
 
-worldtree_corpus_textgraphs2019sharedtask_withgraphvis.zip: worldtree_corpus.sha256
+$(WORLDTREE).zip: worldtree_corpus.sha256
 	@echo 'Please note that this distribution is still subject to the terms set forth in the included license.'
 	@echo 'See the full license for specific details: EULA AI2 Mercury Dataset 01012018.docx'
-	curl -sL -o "$@" 'http://cognitiveai.org/dist/worldtree_corpus_textgraphs2019sharedtask_withgraphvis.zip'
+	curl -sL -o "$@" 'http://cognitiveai.org/dist/$(WORLDTREE).zip'
 	sha256sum -c "$<"

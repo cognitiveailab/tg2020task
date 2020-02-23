@@ -22,12 +22,12 @@ def load_gold(filepath_or_buffer, sep='\t'):
 
     gold = OrderedDict()
 
-    for _, row in df[['questionID', 'explanation']].dropna().iterrows():
+    for _, row in df[['QuestionID', 'explanation']].dropna().iterrows():
         explanations = OrderedDict((uid.lower(), Explanation(uid.lower(), role))
                                    for e in row['explanation'].split()
                                    for uid, role in (e.split('|', 1),))
 
-        question = Question(row['questionID'].lower(), explanations)
+        question = Question(row['QuestionID'].lower(), explanations)
 
         gold[question.id] = question
 

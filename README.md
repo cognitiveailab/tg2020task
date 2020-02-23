@@ -1,6 +1,8 @@
 TextGraphs-13 Shared Task on Multi-Hop Inference Explanation Regeneration
 =========================================================================
 
+TBA
+
 Overview
 --------
 Multi-hop inference is the task of combining more than one piece of information to solve an inference task, such as question answering.  This can take many forms, from combining free-text sentences read from books or the web, to combining linked facts from a structured knowledge base.  The Shared Task on Explanation Regeneration asks participants to develop methods to reconstruct gold explanations for elementary science questions, using a new corpus of gold explanations that provides supervision and instrumentation for this multi-hop inference task.  Each explanation is represented as an "explanation graph", a set of atomic facts (between 1 and 16 per explanation, drawn from a knowledge base of 5,000 facts) that, together, form a detailed explanation for the reasoning required to answer and explain the resoning behind a question.  Linking these facts to achieve strong performance at rebuilding the gold explanation graphs will require methods to perform multi-hop inference.  The explanations include both core scientific facts as well as detailed world knowledge, allowing this task to appeal to those interested in both multi-hop reasoning and common-sense inference.   
@@ -164,7 +166,7 @@ Participants are also encouraged, but not required, to report the following meas
 
 ### Baselines
 
-The shared task data distribution includes a baseline that uses a term frequency model (tf.idf) to rank how likely table row sentences are to be a part of a given explanation.  The performance of this baseline on the development partition is 0.054 MAP.   Baselines for both Scala and Python are provided.
+The shared task data distribution includes a baseline that uses a term frequency model (tf.idf) to rank how likely table row sentences are to be a part of a given explanation.  The performance of this baseline on the development partition is 0.074 MAP.   Baselines for both Scala and Python are provided.
 
 #### Python
 
@@ -212,7 +214,7 @@ Please submit your solutions via CodaLab: <https://competitions.codalab.org/comp
 Contacts
 --------------------
 
-We welcome questions and answers on the shared task on GitHub: <https://github.com/umanlp/tg2019task/issues>.
+We welcome questions and answers on the shared task on GitHub: <https://github.com/cognitiveailab/tg2020task/issues>.
 
 To contact the task organizers directly, please send an email to [textgraphsoc@gmail.com](mailto:textgraphsoc@gmail.com).
 

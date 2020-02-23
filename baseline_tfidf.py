@@ -50,14 +50,14 @@ def main():
     df_q = pd.read_csv(args.questions, sep='\t', dtype=str)
     df_e = pd.DataFrame(explanations, columns=('uid', 'text'))
 
-    vectorizer = TfidfVectorizer().fit(df_q['Question']).fit(df_e['text'])
-    X_q = vectorizer.transform(df_q['Question'])
+    vectorizer = TfidfVectorizer().fit(df_q['question']).fit(df_e['text'])
+    X_q = vectorizer.transform(df_q['question'])
     X_e = vectorizer.transform(df_e['text'])
     X_dist = cosine_distances(X_q, X_e)
 
     for i_question, distances in enumerate(X_dist):
         for i_explanation in np.argsort(distances)[:args.nearest]:
-            print('{}\t{}'.format(df_q.loc[i_question]['questionID'], df_e.loc[i_explanation]['uid']))
+            print('{}\t{}'.format(df_q.loc[i_question]['QuestionID'], df_e.loc[i_explanation]['uid']))
 
 
 if '__main__' == __name__:
