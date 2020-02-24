@@ -17,11 +17,18 @@ class ListShouldBeEmptyWarning(UserWarning):
 def load_gold(filepath_or_buffer: str, sep: str = '\t') -> Dict[str, List[str]]:
     df = pd.read_csv(filepath_or_buffer, sep=sep, dtype=str)
 
+    df = df[df['flags'].str.lower().isin(('success', 'ready'))]
+    df = df[['QuestionID', 'explanation']]
+    df.dropna(inplace=True)
+
+    df['QuestionID'] = df['QuestionID'].str.lower()
+    df['explanation'] = df['explanation'].str.lower()
+
     gold: Dict[str, List[str]] = OrderedDict()
 
-    for _, row in df[['QuestionID', 'explanation']].dropna().iterrows():
-        gold[row['QuestionID'].lower()] = [uid.lower() for e in row['explanation'].split()
-                                           for uid, _ in (e.split('|', 1),)]
+    for _, row in df.iterrows():
+        gold[row['QuestionID']] = [uid for e in row['explanation'].split()
+                                       for uid, _ in (e.split('|', 1),)]
 
     return gold
 
@@ -111,6 +118,9 @@ def main():
     args = parser.parse_args()
 
     gold, pred = load_gold(args.gold), load_pred(args.pred)
+
+    print('{:d} gold questions, {:d} predicted questions'.format(len(gold), len(pred)),
+          file=sys.stderr)
 
     # callback is optional, here it is used to print intermediate results to STDERR
     mean_ap = mean_average_precision_score(
