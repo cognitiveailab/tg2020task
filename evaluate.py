@@ -88,7 +88,7 @@ def average_precision(ranks):
 
 
 def mean_average_precision_score(gold, pred, callback=None):
-    total, count = 0., 0
+    total = 0.
 
     for question in gold.values():
         if question.id in pred:
@@ -100,12 +100,11 @@ def mean_average_precision_score(gold, pred, callback=None):
                 score = 0.
 
             total += score
-            count += 1
 
             if callback:
                 callback(question.id, score)
 
-    mean_ap = total / count if count > 0 else 0.
+    mean_ap = total / len(gold) if gold else 0.
 
     return mean_ap
 
