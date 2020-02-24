@@ -3,8 +3,9 @@
 import math
 import sys
 import warnings
-from collections import namedtuple, OrderedDict
+from collections import OrderedDict
 from functools import partial
+from typing import List, Dict, Callable, Union
 
 import pandas as pd
 
@@ -13,25 +14,25 @@ class ListShouldBeEmptyWarning(UserWarning):
     pass
 
 
-def load_gold(filepath_or_buffer, sep='\t'):
+def load_gold(filepath_or_buffer: str, sep: str = '\t') -> Dict[str, List[str]]:
     df = pd.read_csv(filepath_or_buffer, sep=sep, dtype=str)
 
-    gold = OrderedDict()
+    gold: Dict[str, List[str]] = OrderedDict()
 
     for _, row in df[['QuestionID', 'explanation']].dropna().iterrows():
         gold[row['QuestionID'].lower()] = [uid.lower() for e in row['explanation'].split()
-                                                       for uid, _ in (e.split('|', 1),)]
+                                           for uid, _ in (e.split('|', 1),)]
 
     return gold
 
 
-def load_pred(filepath_or_buffer, sep='\t'):
+def load_pred(filepath_or_buffer: str, sep: str = '\t') -> Dict[str, List[str]]:
     df = pd.read_csv(filepath_or_buffer, sep=sep, names=('question', 'explanation'), dtype=str)
 
     if any(df[field].isnull().all() for field in df.columns):
         raise ValueError('invalid format of the prediction dataset, possibly the wrong separator')
 
-    pred = OrderedDict()
+    pred: Dict[str, List[str]] = OrderedDict()
 
     for id, df_explanations in df.groupby('question'):
         pred[id.lower()] = list(OrderedDict.fromkeys(df_explanations['explanation'].str.lower()))
@@ -39,8 +40,8 @@ def load_pred(filepath_or_buffer, sep='\t'):
     return pred
 
 
-def compute_ranks(true, pred):
-    ranks = []
+def compute_ranks(true: List[str], pred: List[str]) -> List[int]:
+    ranks: List[int] = []
 
     if not true or not pred:
         return ranks
@@ -65,7 +66,7 @@ def compute_ranks(true, pred):
     return ranks
 
 
-def average_precision(ranks):
+def average_precision(ranks: List[int]) -> float:
     total = 0.
 
     if not ranks:
@@ -78,7 +79,8 @@ def average_precision(ranks):
     return total / len(ranks)
 
 
-def mean_average_precision_score(gold, pred, callback=None):
+def mean_average_precision_score(gold: Dict[str, List[str]], pred: Dict[str, List[str]],
+                                 callback: Union[Callable[[str, float], None], None] = None) -> float:
     total = 0.
 
     for id, explanations in gold.items():

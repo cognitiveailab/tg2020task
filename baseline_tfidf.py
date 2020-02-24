@@ -2,6 +2,7 @@
 
 import os
 import warnings
+from typing import List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -9,7 +10,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_distances
 
 
-def read_explanations(path):
+def read_explanations(path: str) -> List[Tuple[str, str]]:
     header = []
     uid = None
 
