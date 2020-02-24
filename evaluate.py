@@ -5,7 +5,7 @@ import sys
 import warnings
 from collections import OrderedDict
 from functools import partial
-from typing import List, Dict, Callable, Union
+from typing import List, Dict, Callable, Optional
 
 import pandas as pd
 
@@ -87,7 +87,7 @@ def average_precision(ranks: List[int]) -> float:
 
 
 def mean_average_precision_score(gold: Dict[str, List[str]], pred: Dict[str, List[str]],
-                                 callback: Union[Callable[[str, float], None], None] = None) -> float:
+                                 callback: Optional[Callable[[str, float], None]] = None) -> float:
     total = 0.
 
     for id, explanations in gold.items():
