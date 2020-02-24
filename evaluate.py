@@ -13,23 +13,14 @@ class ListShouldBeEmptyWarning(UserWarning):
     pass
 
 
-Question = namedtuple('Question', 'id explanations')
-Explanation = namedtuple('Explanation', 'id role')
-
-
 def load_gold(filepath_or_buffer, sep='\t'):
     df = pd.read_csv(filepath_or_buffer, sep=sep, dtype=str)
 
     gold = OrderedDict()
 
     for _, row in df[['QuestionID', 'explanation']].dropna().iterrows():
-        explanations = OrderedDict((uid.lower(), Explanation(uid.lower(), role))
-                                   for e in row['explanation'].split()
-                                   for uid, role in (e.split('|', 1),))
-
-        question = Question(row['QuestionID'].lower(), explanations)
-
-        gold[question.id] = question
+        gold[row['QuestionID'].lower()] = [uid.lower() for e in row['explanation'].split()
+                                                       for uid, _ in (e.split('|', 1),)]
 
     return gold
 
@@ -42,8 +33,8 @@ def load_pred(filepath_or_buffer, sep='\t'):
 
     pred = OrderedDict()
 
-    for question_id, df_explanations in df.groupby('question'):
-        pred[question_id.lower()] = list(OrderedDict.fromkeys(df_explanations['explanation'].str.lower()))
+    for id, df_explanations in df.groupby('question'):
+        pred[id.lower()] = list(OrderedDict.fromkeys(df_explanations['explanation'].str.lower()))
 
     return pred
 
@@ -90,9 +81,9 @@ def average_precision(ranks):
 def mean_average_precision_score(gold, pred, callback=None):
     total = 0.
 
-    for question in gold.values():
-        if question.id in pred:
-            ranks = compute_ranks(list(question.explanations), pred[question.id])
+    for id, explanations in gold.items():
+        if id in pred:
+            ranks = compute_ranks(explanations, pred[id])
 
             score = average_precision(ranks)
 
@@ -102,7 +93,7 @@ def mean_average_precision_score(gold, pred, callback=None):
             total += score
 
             if callback:
-                callback(question.id, score)
+                callback(id, score)
 
     mean_ap = total / len(gold) if gold else 0.
 
