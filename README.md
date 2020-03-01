@@ -42,13 +42,13 @@ In order to prepare a submission file for CodaLab, create a ZIP file containing 
 
 ## Submission
 
-Please submit your solutions via CodaLab: <https://competitions.codalab.org/competitions/20150>.
+Please submit your solutions via CodaLab: <https://competitions.codalab.org/competitions/23615>.
 
 ## Contacts
 
 This shared task is organized within the 14th workshop on graph-based natural language processing, TextGraphs-14: <https://sites.google.com/view/textgraphs2020>.
 
-We welcome questions and answers on the shared task on CodaLab Forums: <https://competitions.codalab.org/forums/20150/>.
+We welcome questions and answers on the shared task on CodaLab Forums: <https://competitions.codalab.org/forums/20311/>.
 
 To contact the task organizers directly, please send an email to [textgraphsoc@gmail.com](mailto:textgraphsoc@gmail.com).
 
