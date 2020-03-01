@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
 
-import math
 import sys
-import warnings
 from collections import OrderedDict
 from functools import partial
 from typing import List, Dict, Callable, Optional
 
 import pandas as pd
-
-
-class ListShouldBeEmptyWarning(UserWarning):
-    pass
 
 
 def load_gold(filepath_or_buffer: str, sep: str = '\t') -> Dict[str, List[str]]:
@@ -28,7 +22,7 @@ def load_gold(filepath_or_buffer: str, sep: str = '\t') -> Dict[str, List[str]]:
 
     for _, row in df.iterrows():
         gold[row['QuestionID']] = [uid for e in row['explanation'].split()
-                                       for uid, _ in (e.split('|', 1),)]
+                                   for uid, _ in (e.split('|', 1),)]
 
     return gold
 
@@ -47,66 +41,50 @@ def load_pred(filepath_or_buffer: str, sep: str = '\t') -> Dict[str, List[str]]:
     return pred
 
 
-def compute_ranks(true: List[str], pred: List[str]) -> List[int]:
-    ranks: List[int] = []
+def average_precision_score(gold: List[str], pred: List[str],
+                            callback: Optional[Callable[[int, int], None]] = None) -> float:
+    if not gold or not pred:
+        return 0.
 
-    if not true or not pred:
-        return ranks
+    correct = 0
 
-    targets = list(true)
+    ap = 0.
 
-    # I do not understand the corresponding block of the original Scala code.
-    for i, pred_id in enumerate(pred):
-        for true_id in targets:
-            if pred_id == true_id:
-                ranks.append(i + 1)
-                targets.remove(pred_id)
-                break
+    true = set(gold)
 
-    # Example: Mercury_SC_416133
-    if targets:
-        warnings.warn('targets list should be empty, but it contains: ' + ', '.join(targets), ListShouldBeEmptyWarning)
+    for rank, element in enumerate(pred):
+        if element in true:
+            correct += 1
 
-        for _ in targets:
-            ranks.append(0)
+            if callable(callback):
+                callback(correct, rank)
 
-    return ranks
+            ap += correct / (rank + 1.)
 
+            true.remove(element)
 
-def average_precision(ranks: List[int]) -> float:
-    total = 0.
-
-    if not ranks:
-        return total
-
-    for i, rank in enumerate(ranks):
-        precision = float(i + 1) / float(rank) if rank > 0 else math.inf
-        total += precision
-
-    return total / len(ranks)
+    return ap / len(gold)
 
 
-def mean_average_precision_score(gold: Dict[str, List[str]], pred: Dict[str, List[str]],
+def mean_average_precision_score(golds: Dict[str, List[str]], preds: Dict[str, List[str]],
                                  callback: Optional[Callable[[str, float], None]] = None) -> float:
-    total = 0.
+    if not golds or not preds:
+        return 0.
 
-    for id, explanations in gold.items():
-        if id in pred:
-            ranks = compute_ranks(explanations, pred[id])
+    sum_ap = 0.
 
-            score = average_precision(ranks)
+    for id, gold in golds.items():
+        if id in preds:
+            pred = preds[id]
 
-            if not math.isfinite(score):
-                score = 0.
+            score = average_precision_score(gold, pred)
 
-            total += score
-
-            if callback:
+            if callable(callback):
                 callback(id, score)
 
-    mean_ap = total / len(gold) if gold else 0.
+            sum_ap += score
 
-    return mean_ap
+    return sum_ap / len(golds)
 
 
 def main():
@@ -124,8 +102,7 @@ def main():
 
     # callback is optional, here it is used to print intermediate results to STDERR
     mean_ap = mean_average_precision_score(
-        gold, pred,
-        callback=partial(print, file=sys.stderr)
+        gold, pred, callback=partial(print, file=sys.stderr)
     )
 
     print('MAP: ', mean_ap)
