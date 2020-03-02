@@ -25,4 +25,4 @@ dataset: $(WORLDTREE)
 $(WORLDTREE): worldtree_corpus.sha256
 	@echo 'Please note that this distribution is subject to the terms set in the license: http://cognitiveai.org/explanationbank/'
 	curl -sL -o "$@" 'http://cognitiveai.org/dist/$(WORLDTREE)'
-	sha256sum -c "$<"
+	shasum -a 256 -c "$<"
