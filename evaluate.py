@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 import sys
+import warnings
 from collections import OrderedDict
 from functools import partial
 from typing import List, Dict, Callable, Optional
 
 import pandas as pd
+
+
+class IncompletePredictionWarning(UserWarning):
+    pass
 
 
 def load_gold(filepath_or_buffer: str, sep: str = '\t') -> Dict[str, List[str]]:
@@ -63,7 +68,11 @@ def average_precision_score(gold: List[str], pred: List[str],
 
             true.remove(element)
 
-    return ap / len(gold)
+    if true:
+        warnings.warn('pred is missing gold: ' + ', '.join(true), IncompletePredictionWarning)
+        return 0.
+    else:
+        return ap / len(gold)
 
 
 def mean_average_precision_score(golds: Dict[str, List[str]], preds: Dict[str, List[str]],
