@@ -1,5 +1,5 @@
 TABLESTORE := expl-tablestore-export-2020-02-17-123232
-WORLDTREE := $(TABLESTORE)-traindevetest.zip
+WORLDTREE := tg2020task-dataset.zip
 
 evaluate: predict-tfidf.txt
 	./evaluate.py --gold=$(TABLESTORE)/questions.dev.tsv $<
@@ -23,7 +23,6 @@ dataset: $(WORLDTREE)
 	unzip -o $<
 
 $(WORLDTREE): worldtree_corpus.sha256
-	@echo 'Please note that this distribution is still subject to the terms set forth in the included license.'
-	@echo 'See the full license for specific details: EULA AI2 Mercury Dataset 01012018.docx'
+	@echo 'Please note that this distribution is subject to the terms set in the license: http://cognitiveai.org/explanationbank/'
 	curl -sL -o "$@" 'http://cognitiveai.org/dist/$(WORLDTREE)'
 	sha256sum -c "$<"
