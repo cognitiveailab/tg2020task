@@ -70,9 +70,8 @@ def average_precision_score(gold: List[str], pred: List[str],
 
     if true:
         warnings.warn('pred is missing gold: ' + ', '.join(true), IncompletePredictionWarning)
-        return 0.
-    else:
-        return ap / len(gold)
+
+    return ap / len(gold)
 
 
 def mean_average_precision_score(golds: Dict[str, List[str]], preds: Dict[str, List[str]],
