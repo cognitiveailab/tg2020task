@@ -1,6 +1,6 @@
 Call for Participation:
 TextGraphs-14 Shared Task on Explanation Regeneration
-https://github.com/cognitiveailab/tg2020task
+https://competitions.codalab.org/competitions/23615
 
 We invite participation in the 2nd Shared Task on Explanation Regeneration
 associated with the 14th Workshop on Graph-Based Natural Language Processing
@@ -73,4 +73,4 @@ plain-text sentences (unstructured) as well as semi-structured tables. Facts are
 combination of scientific knowledge as well as common-sense/world knowledge.
 
 Please see the shared task website for more details:
-https://github.com/cognitiveailab/tg2020task
+https://competitions.codalab.org/competitions/23615
