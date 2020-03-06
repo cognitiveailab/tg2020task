@@ -74,3 +74,4 @@ combination of scientific knowledge as well as common-sense/world knowledge.
 
 Please see the shared task website for more details:
 https://competitions.codalab.org/competitions/23615
+https://github.com/cognitiveailab/tg2020task
