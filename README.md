@@ -32,7 +32,7 @@ $ make dataset
 $ ./baseline_tfidf.py expl-tablestore-export-2020-02-17-123232/tables expl-tablestore-export-2020-02-17-123232/questions.dev.tsv > predict.txt
 ```
 
-The format of the `predict.txt` file is `questionID<TAB>explanationID` without header; the order is important.
+The format of the `predict.txt` file is `questionID<TAB>explanationID` without header; the order is important. When [tqdm](https://github.com/tqdm/tqdm) is installed, `baseline_tfidf.py` will show a nicely-looking progress bar.
 
 ```shell
 $ ./evaluate.py --gold=expl-tablestore-export-2020-02-17-123232/questions.dev.tsv predict.txt
