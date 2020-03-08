@@ -20,13 +20,13 @@ dataset: $(WORLDTREE)
 	rm -rf $(TABLESTORE)
 	unzip -o $<
 
-SHA256CHECK := $(shell type -p sha256sum || echo shasum -a 256)
+SHA256SUM := $(shell type -p sha256sum || echo shasum -a 256)
 
 $(WORLDTREE): worldtree_corpus.sha256
 	@echo 'Please note that this distribution is subject to the terms set in the license:'
 	@echo 'http://cognitiveai.org/explanationbank/'
 	curl -sL -o "$@" 'http://cognitiveai.org/dist/$(WORLDTREE)'
-	$(SHA256CHECK) -c "$<"
+	$(SHA256SUM) -c "$<"
 
 clean:
 	rm -rf $(TABLESTORE)
