@@ -38,7 +38,7 @@ The format of the `predict.txt` file is `questionID<TAB>explanationID` without h
 $ ./evaluate.py --gold=expl-tablestore-export-2020-02-17-123232/questions.dev.tsv predict.txt
 ```
 
-In order to prepare a submission file for CodaLab, create a ZIP file containing your `predict.txt` for the *test* dataset, cf. `make predict-tfidf.zip`.
+In order to prepare a submission file for CodaLab, create a ZIP file containing your `predict.txt` for the *test* dataset, cf. `make predict-tfidf-test.zip`.
 
 ## Submission
 
