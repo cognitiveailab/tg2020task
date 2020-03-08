@@ -20,7 +20,7 @@ Dates are specified in the ISO&nbsp;8601 format.
 
 ## Baselines
 
-The shared task data distribution includes a baseline that uses a term frequency model (tf.idf) to rank how likely table row sentences are to be a part of a given explanation. The performance of this baseline on the development partition is 0.216 MAP.
+The shared task data distribution includes a baseline that uses a term frequency model (tf.idf) to rank how likely table row sentences are to be a part of a given explanation. The performance of this baseline on the development partition is 0.239 MAP.
 
 ### Python
 
