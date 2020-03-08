@@ -2,12 +2,18 @@
 
 import os
 import warnings
-from typing import List, Tuple
+from typing import List, Tuple, Iterable
 
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_distances
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    def tqdm(iterable: Iterable, **kwargs) -> Iterable:
+        return iterable
 
 
 def read_explanations(path: str) -> List[Tuple[str, str]]:
@@ -34,7 +40,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', '--nearest', type=int, default=10)
+    parser.add_argument('-n', '--nearest', type=int, default=100)
     parser.add_argument('tables')
     parser.add_argument('questions', type=argparse.FileType('r', encoding='UTF-8'))
     args = parser.parse_args()
@@ -56,7 +62,7 @@ def main():
     X_e = vectorizer.transform(df_e['text'])
     X_dist = cosine_distances(X_q, X_e)
 
-    for i_question, distances in enumerate(X_dist):
+    for i_question, distances in tqdm(enumerate(X_dist), desc=args.questions.name, total=X_q.shape[0]):
         for i_explanation in np.argsort(distances)[:args.nearest]:
             print('{}\t{}'.format(df_q.loc[i_question]['QuestionID'], df_e.loc[i_explanation]['uid']))
 
