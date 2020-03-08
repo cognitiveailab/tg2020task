@@ -13,8 +13,8 @@ predict-tfidf-%.zip: predict-tfidf-%.txt
 	zip -j $@ $(TMP)/predict.txt
 	rm -rf $(TMP)
 
-predict-tfidf-%.txt:
-	./baseline_tfidf.py $(TABLESTORE)/tables $(TABLESTORE)/questions.$*.tsv > $@
+predict-tfidf-%.txt: $(TABLESTORE)/questions.%.tsv
+	./baseline_tfidf.py $(TABLESTORE)/tables $< > $@
 
 dataset: $(WORLDTREE)
 	rm -rf $(TABLESTORE)
