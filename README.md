@@ -9,12 +9,12 @@ Multi-hop inference is the task of combining more than one piece of information 
 
 * 2020-03-06: Training data release
 * 2020-04-06: Test data release; Evaluation start
-* 2020-05-06: Evaluation end
-* 2020-05-20: System description paper deadline
-* 2020-06-10: Deadline for reviews of system description papers
-* 2020-06-24: Author notifications
-* 2020-07-11: Camera-ready description paper deadline
-* 2020-09-14: [TextGraphs-14 workshop](https://sites.google.com/view/textgraphs2020)
+* 2020-09-21: Evaluation end
+* 2020-10-02: System description paper deadline
+* 2020-10-18: Deadline for reviews of system description papers
+* 2020-10-25: Author notifications
+* 2020-11-01: Camera-ready description paper deadline
+* 2020-12-13: [TextGraphs-14 workshop](https://sites.google.com/view/textgraphs2020)
 
 Dates are specified in the ISO&nbsp;8601 format.
 
