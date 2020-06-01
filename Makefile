@@ -25,7 +25,7 @@ SHA256SUM := $(shell type -p sha256sum || echo shasum -a 256)
 $(WORLDTREE): worldtree_corpus.sha256
 	@echo 'Please note that this distribution is subject to the terms set in the license:'
 	@echo 'http://cognitiveai.org/explanationbank/'
-	curl -sL -o "$@" 'http://cognitiveai.org/dist/$(WORLDTREE)'
+	curl -sL -o "$@" 'https://github.com/cognitiveailab/tg2020task/releases/download/tg2020/$(WORLDTREE)'
 	$(SHA256SUM) -c "$<"
 
 clean:
