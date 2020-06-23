@@ -20,7 +20,7 @@ Dates are specified in the ISO&nbsp;8601 format.
 
 ## Baselines
 
-The shared task data distribution includes a baseline that uses a term frequency model (tf.idf) to rank how likely table row sentences are to be a part of a given explanation. The performance of this baseline on the development partition is 0.239 MAP.
+The shared task data distribution includes a baseline that uses a term frequency model (tf.idf) to rank how likely table row sentences are to be a part of a given explanation. The performance of this baseline on the development partition is 0.255 MAP.
 
 ### Python
 
@@ -29,13 +29,13 @@ $ make dataset
 ```
 
 ```shell
-$ ./baseline_tfidf.py expl-tablestore-export-2020-02-17-123232/tables expl-tablestore-export-2020-02-17-123232/questions.dev.tsv > predict.txt
+$ ./baseline_tfidf.py tables questions.dev.tsv > predict.txt
 ```
 
 The format of the `predict.txt` file is `questionID<TAB>explanationID` without header; the order is important. When [tqdm](https://github.com/tqdm/tqdm) is installed, `baseline_tfidf.py` will show a nicely-looking progress bar.
 
 ```shell
-$ ./evaluate.py --gold=expl-tablestore-export-2020-02-17-123232/questions.dev.tsv predict.txt
+$ ./evaluate.py questions.dev.tsv predict.txt
 ```
 
 In order to prepare a submission file for CodaLab, create a ZIP file containing your `predict.txt` for the *test* dataset, cf. `make predict-tfidf-test.zip`.
@@ -61,6 +61,8 @@ You further agree that the task organizers are under no obligation to release sc
 You further agree that your system may be named according to the team name provided at the time of submission, or to a suitable shorthand as determined by the task organizers.
 
 You agree not to use or redistribute the shared task data except in the manner prescribed by its licence.
+
+**To encourage transparency and replicability, all teams must publish their code, tuning procedures, and instructions for running their models with their submission of shared task papers.**
 
 ## References
 
