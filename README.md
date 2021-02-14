@@ -66,19 +66,19 @@ You agree not to use or redistribute the shared task data except in the manner p
 
 ## References
 
-* Jansen P. and Ustalov D. [TextGraphs 2019 Shared Task on Multi-Hop Inference for Explanation Regeneration](https://doi.org/10.18653/v1/D19-5309). *Proceedings of the Thirteenth Workshop on Graph-Based Methods for Natural Language Processing (TextGraphs-13).* Hong Kong: Association for Computational Linguistics, 2019, pp. 63&ndash;77.
+* Jansen, P., Ustalov, D.: [TextGraphs 2020 Shared Task on Multi-Hop Inference for Explanation Regeneration](https://www.aclweb.org/anthology/2020.textgraphs-1.10). In: Proceedings of the Graph-based Methods for Natural Language Processing (TextGraphs). pp. 85&ndash;97. Association for Computational Linguistics, Barcelona, Spain (Online) (2020).
 
 ```
-@inproceedings{Jansen:19,
+@inproceedings{Jansen:20,
   author    = {Jansen, Peter and Ustalov, Dmitry},
-  title     = {{TextGraphs~2019 Shared Task on Multi-Hop Inference for Explanation Regeneration}},
-  booktitle = {Proceedings of the Thirteenth Workshop on Graph-Based Methods for Natural Language Processing (TextGraphs-13)},
-  year      = {2019},
-  pages     = {63--77},
-  doi       = {10.18653/v1/D19-5309},
-  isbn      = {978-1-950737-86-4},
-  address   = {Hong Kong},
+  title     = {{TextGraphs~2020 Shared Task on Multi-Hop Inference for Explanation Regeneration}},
+  year      = {2020},
+  booktitle = {Proceedings of the Graph-based Methods for Natural Language Processing (TextGraphs)},
+  pages     = {85--97},
+  address   = {Barcelona, Spain (Online)},
   publisher = {Association for Computational Linguistics},
+  isbn      = {978-1-952148-42-2},
+  url       = {https://www.aclweb.org/anthology/2020.textgraphs-1.10},
   language  = {english},
 }
 ```
